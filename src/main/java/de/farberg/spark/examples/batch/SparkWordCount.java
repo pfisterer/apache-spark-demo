@@ -14,10 +14,16 @@ public class SparkWordCount {
 		String logFile = "src/main/resources/log4j.properties";
 		SparkConf conf = new SparkConf().setMaster("local[2]").setAppName("Simple Application");
 		JavaSparkContext sc = new JavaSparkContext(conf);
-		
+
 		JavaRDD<String> logData = sc.textFile(logFile).cache();
 
-		long numLog4js = logData.filter(s -> s.contains("log4j")).count();
+		// Transformation
+		JavaRDD<String> filteredData = logData.filter(s -> s.contains("log4j"));
+
+		// Action
+		long numLog4js = filteredData.count();
+
+		// Transformation + Action in one line of code
 		long numBs = logData.filter(s -> s.contains("b")).count();
 
 		sc.close();

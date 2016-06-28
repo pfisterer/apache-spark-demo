@@ -33,6 +33,13 @@
 			<version>1.6.1</version>
 		</dependency>
 
+		<!-- https://github.com/databricks/spark-csv -->
+		<dependency>
+			<groupId>com.databricks</groupId>
+			<artifactId>spark-csv_2.10</artifactId>
+			<version>1.4.0</version>
+		</dependency>
+
 		<!-- Logging -->
 		<dependency>
 			<groupId>org.slf4j</groupId>
