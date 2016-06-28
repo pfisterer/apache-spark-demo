@@ -39,7 +39,7 @@ public class ServerSocketSource<T> {
 					Socket clientSocket = serverSocket.accept();
 					PrintWriter out = new PrintWriter(clientSocket.getOutputStream(), true);
 
-					for (; true;) {
+					while (running) {
 						out.println(supplier.get());
 						out.flush();
 						Thread.sleep(millisToSleep.get());

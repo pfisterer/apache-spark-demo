@@ -10,9 +10,9 @@ public class ElectricConsumer implements Serializable {
 	double posLon;
 	double posLat;
 
-	public ElectricConsumer(int kww, double posLon, double posLat, boolean an) {
+	public ElectricConsumer(int kwH, double posLon, double posLat, boolean an) {
 		super();
-		this.kwH = kww;
+		this.kwH = kwH;
 		this.posLon = posLon;
 		this.posLat = posLat;
 		this.switchedOn = an;

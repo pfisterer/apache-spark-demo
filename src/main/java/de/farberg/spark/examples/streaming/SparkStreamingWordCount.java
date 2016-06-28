@@ -25,12 +25,12 @@ public class SparkStreamingWordCount {
 
 		// Create a JavaReceiverInputDStream on target ip:port and count the words in input stream of \n delimited text
 		JavaReceiverInputDStream<String> lines = ssc.socketTextStream(host, dataSource.getLocalPort(), StorageLevels.MEMORY_AND_DISK_SER);
-
+		
 		JavaDStream<String> words = lines.flatMap(x -> Lists.newArrayList(x.split(" ")));
 
-		JavaPairDStream<String, Integer> wordCounts = words.mapToPair(s -> new Tuple2<String, Integer>(s, 1))
+		JavaPairDStream<String, Integer> wordCounts = words.mapToPair(word -> new Tuple2<String, Integer>(word, 1))
 				.reduceByKey((i1, i2) -> i1 + i2);
-
+		
 		wordCounts.print();
 		ssc.start();
 
