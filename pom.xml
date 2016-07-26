@@ -12,25 +12,33 @@
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<spark.version>1.6.2</spark.version>
+		<scala.binary.version>2.10</scala.binary.version>
 	</properties>
 
 	<dependencies>
 
-		<!-- Spark dependency -->
+		<!-- Spark dependencies -->
 		<dependency>
 			<groupId>org.apache.spark</groupId>
-			<artifactId>spark-core_2.10</artifactId>
-			<version>1.6.1</version>
+			<artifactId>spark-core_${scala.binary.version}</artifactId>
+			<version>${spark.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.apache.spark</groupId>
-			<artifactId>spark-streaming_2.10</artifactId>
-			<version>1.6.1</version>
+			<artifactId>spark-streaming_${scala.binary.version}</artifactId>
+			<version>${spark.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.apache.spark</groupId>
-			<artifactId>spark-sql_2.10</artifactId>
-			<version>1.6.1</version>
+			<artifactId>spark-sql_${scala.binary.version}</artifactId>
+			<version>${spark.version}</version>
+		</dependency>
+
+		<dependency> <!-- For Spark-Kafka connectivity -->
+			<groupId>org.apache.spark</groupId>
+			<artifactId>spark-streaming-kafka_${scala.binary.version}</artifactId>
+			<version>${spark.version}</version>
 		</dependency>
 
 		<!-- https://github.com/databricks/spark-csv -->
@@ -38,6 +46,13 @@
 			<groupId>com.databricks</groupId>
 			<artifactId>spark-csv_2.10</artifactId>
 			<version>1.4.0</version>
+		</dependency>
+
+		<!-- CSV files -->
+		<dependency>
+			<groupId>org.apache.commons</groupId>
+			<artifactId>commons-csv</artifactId>
+			<version>1.2</version>
 		</dependency>
 
 		<!-- Logging -->

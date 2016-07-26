@@ -11,6 +11,10 @@ public class ServerSocketSource<T> {
 	private Supplier<T> supplier;
 	private Supplier<Integer> millisToSleep;
 
+	public ServerSocketSource(Supplier<T> supplier) {
+		this(supplier, null);
+	}
+
 	public ServerSocketSource(Supplier<T> supplier, Supplier<Integer> millisToSleep) {
 		this.supplier = supplier;
 		this.millisToSleep = millisToSleep;
@@ -40,9 +44,16 @@ public class ServerSocketSource<T> {
 					PrintWriter out = new PrintWriter(clientSocket.getOutputStream(), true);
 
 					while (running) {
-						out.println(supplier.get());
+						T x = supplier.get();
+						if (x == null) {
+							out.flush();
+							out.close();
+							break;
+						}
+						out.println(x);
 						out.flush();
-						Thread.sleep(millisToSleep.get());
+						if (millisToSleep != null)
+							Thread.sleep(millisToSleep.get());
 					}
 				}
 

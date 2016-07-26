@@ -16,7 +16,10 @@ public class SparkSqlStreamingDemo {
 		JavaSparkContext sc = new JavaSparkContext(conf);
 		SQLContext sqlContext = new SQLContext(sc);
 
-		List<ElectricConsumer> data = Arrays.asList(new ElectricConsumer(10, 49, 2, true), new ElectricConsumer(11, 47, 3, false));
+		List<ElectricConsumer> data = Arrays.asList(
+				new ElectricConsumer(10, 49, 2, true), 
+				new ElectricConsumer(11, 47, 3, false));
+		
 		JavaRDD<ElectricConsumer> distData = sc.parallelize(data);
 
 		DataFrame dataFrame = sqlContext.createDataFrame(distData, ElectricConsumer.class);

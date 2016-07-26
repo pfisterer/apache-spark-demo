@@ -34,8 +34,9 @@ public class SumoDataProcessing {
 			int vehicleIdIndex = row.fieldIndex("vehicle-id");
 			int co2EmissionIndex = row.fieldIndex("co2-emission");
 			return new Tuple2<Integer, Double>(row.getInt(vehicleIdIndex), row.getDouble(co2EmissionIndex));
+
 		}).reduceByKey((a, b) -> a + b).sortByKey().collect().forEach(tuple -> {
-			System.out.println("Car " + tuple._1 + " = " + tuple._2 + " mg of CO2 emission");
+			System.out.println("Car #" + tuple._1 + ": " + tuple._2 + " mg of CO2 emission");
 		});
 
 		sc.close();

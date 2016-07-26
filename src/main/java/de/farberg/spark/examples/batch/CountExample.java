@@ -6,7 +6,7 @@ import org.apache.spark.api.java.JavaSparkContext;
 
 import de.uniluebeck.itm.util.logging.Logging;
 
-public class SparkWordCount {
+public class CountExample {
 
 	public static void main(String[] args) {
 		Logging.setLoggingDefaults();
