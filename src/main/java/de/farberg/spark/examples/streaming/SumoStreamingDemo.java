@@ -30,7 +30,7 @@ public class SumoStreamingDemo {
 			"edge-id", "edge-name", "speed", "fuel-consumption", "co2-emission", "co-emission", "hc-emission", "noise-emission",
 			"nox-emission", "pmx-emission" };
 
-	public static void main(String[] args) throws IOException {
+	public static void main(String[] args) throws IOException, InterruptedException {
 		Logging.setLoggingDefaults();
 		Logger log = LoggerFactory.getLogger(SumoStreamingDemo.class);
 
@@ -38,7 +38,8 @@ public class SumoStreamingDemo {
 
 		// Set up the parsing of the CSV file
 		log.info("Reading file {}", fileName);
-		Iterator<CSVRecord> csvIterator = CSVFormat.EXCEL.withHeader(CSV_HEADERS_SUMO_TRACI_OUT)
+		Iterator<CSVRecord> csvIterator = CSVFormat.EXCEL
+				.withHeader(CSV_HEADERS_SUMO_TRACI_OUT)
 				.withSkipHeaderRecord()
 				.withDelimiter(',')
 				.withQuote('"')
@@ -71,9 +72,8 @@ public class SumoStreamingDemo {
 			}
 
 			// Return the data set as fieldName=value,fieldName=value,... (e.g., vehicle-id=1,co2-emission=123.456,...)
-			return Arrays.stream(CSV_HEADERS_SUMO_TRACI_OUT)
-					.map(fieldName -> fieldName + "=" + record.get(fieldName))
-					.collect(Collectors.joining(","));
+			return Arrays.stream(CSV_HEADERS_SUMO_TRACI_OUT).map(fieldName -> fieldName + "=" + record.get(fieldName)).collect(
+					Collectors.joining(","));
 		});
 
 		// Create the context with a 1 second batch size
@@ -86,7 +86,8 @@ public class SumoStreamingDemo {
 		// Map entries to <vehicle-id, Map<key, value> >-pairs (e.g., (1, < (co2-emission, 123.456), ...))
 		@SuppressWarnings("resource")
 		JavaPairDStream<String, Map<String, String>> mappedLines = lines.mapToPair(line -> {
-			Map<String, String> keyValueMap = Arrays.stream(line.split(","))
+			Map<String, String> keyValueMap = Arrays
+					.stream(line.split(","))
 					.collect(Collectors.toMap(entry -> entry.split("=")[0], entry -> entry.split("=")[1]));
 
 			return new Tuple2<>(keyValueMap.get("vehicle-id"), keyValueMap);
@@ -101,6 +102,9 @@ public class SumoStreamingDemo {
 
 		// Compute the CO2 sum during this batch interval
 		JavaDStream<Double> co2sum = co2PerCar.map(entry -> entry._2).reduce((a, b) -> a + b);
+
+		co2sum.foreachRDD(rdd -> {
+		});
 
 		// Print the accumulated CO2 emissions for all cars
 		co2sum.print();

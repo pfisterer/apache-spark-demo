@@ -3,7 +3,6 @@ package de.farberg.spark.examples.streaming;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Map;
-import java.util.Random;
 import java.util.Set;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
@@ -18,7 +17,7 @@ import org.apache.spark.streaming.kafka.KafkaUtils;
 
 import scala.Tuple2;
 
-public class KafkaWordCount {
+public class KafkaSocialSoftware {
 	private static final Pattern SPACE = Pattern.compile(" ");
 
 	public static void main(String[] args) throws Exception {
@@ -30,18 +29,16 @@ public class KafkaWordCount {
 		}
 
 		// Create context with a 2 seconds batch interval
-		SparkConf sparkConf = new SparkConf().setAppName("KafkaWorkCountDemo").setMaster("local[*]");
+		SparkConf sparkConf = new SparkConf().setAppName("KafkaWorkCountDemo").setMaster("local[2]");
 		JavaStreamingContext jssc = new JavaStreamingContext(sparkConf, Durations.seconds(2));
 
 		// Create Kafka stream
 		String zookeepers = args[0];
-		String groupId = "Bla" + new Random().nextInt();
+		String groupId = "Bla";
 		Set<String> topicsSet = new HashSet<>(Arrays.asList(args[1].split(",")));
-		Map<String, Integer> topicMap = 
-				topicsSet.stream().collect(Collectors.toMap(key -> key, value -> 1));
+		Map<String, Integer> topicMap = topicsSet.stream().collect(Collectors.toMap(key -> key, value -> 1));
 
-		JavaPairReceiverInputDStream<String, String> messages = 
-				KafkaUtils.createStream(jssc, zookeepers, groupId, topicMap);
+		JavaPairReceiverInputDStream<String, String> messages = KafkaUtils.createStream(jssc, zookeepers, groupId, topicMap);
 
 		// // Get the lines, split them into words, count the words and print
 		JavaDStream<String> lines = messages.map((Tuple2<String, String> tuple) -> tuple._2);

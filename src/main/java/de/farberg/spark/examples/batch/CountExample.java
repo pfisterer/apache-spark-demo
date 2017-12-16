@@ -10,12 +10,14 @@ public class CountExample {
 
 	public static void main(String[] args) {
 		Logging.setLoggingDefaults();
-
 		String logFile = "src/main/resources/log4j.properties";
-		SparkConf conf = new SparkConf().setMaster("local[2]").setAppName("Simple Application");
+
+		SparkConf conf = new SparkConf()
+				.setMaster("local[*]")
+				.setAppName("Simple Application");
 		JavaSparkContext sc = new JavaSparkContext(conf);
 
-		JavaRDD<String> logData = sc.textFile(logFile).cache();
+		JavaRDD<String> logData = sc.textFile(logFile);
 
 		// Transformation
 		JavaRDD<String> filteredData = logData.filter(s -> s.contains("log4j"));

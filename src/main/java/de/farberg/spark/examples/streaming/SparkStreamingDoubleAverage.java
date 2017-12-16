@@ -14,7 +14,7 @@ import scala.Tuple2;
 public class SparkStreamingDoubleAverage {
 	private static final String host = "localhost";
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws InterruptedException {
 
 		// Listen on a server socket and on connection send random values to the socket
 		Random r = new Random();

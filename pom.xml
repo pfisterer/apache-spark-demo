@@ -12,11 +12,36 @@
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<spark.version>1.6.2</spark.version>
+		<spark.version>2.2.0</spark.version>
 		<scala.binary.version>2.10</scala.binary.version>
 	</properties>
 
 	<dependencies>
+
+		<!-- https://mvnrepository.com/artifact/com.rgi-corp/ww-geo-coords -->
+		<dependency>
+			<groupId>com.rgi-corp</groupId>
+			<artifactId>ww-geo-coords</artifactId>
+			<version>1.0</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.geotools</groupId>
+			<artifactId>gt-api</artifactId>
+			<version>17.2</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.geotools</groupId>
+			<artifactId>gt-referencing</artifactId>
+			<version>17.2</version>
+		</dependency>
+
+		<dependency>
+			<groupId>com.javadocmd</groupId>
+			<artifactId>simplelatlng</artifactId>
+			<version>1.3.1</version>
+		</dependency>
 
 		<!-- Spark dependencies -->
 		<dependency>
@@ -38,14 +63,7 @@
 		<dependency> <!-- For Spark-Kafka connectivity -->
 			<groupId>org.apache.spark</groupId>
 			<artifactId>spark-streaming-kafka_${scala.binary.version}</artifactId>
-			<version>${spark.version}</version>
-		</dependency>
-
-		<!-- https://github.com/databricks/spark-csv -->
-		<dependency>
-			<groupId>com.databricks</groupId>
-			<artifactId>spark-csv_2.10</artifactId>
-			<version>1.4.0</version>
+			<version>1.6.3</version>
 		</dependency>
 
 		<!-- CSV files -->
@@ -216,6 +234,17 @@
 			<id>jboss.release</id>
 			<name>JBoss releases</name>
 			<url>https://repository.jboss.org/nexus/content/groups/public/</url>
+		</repository>
+
+		<repository>
+			<id>maven2-repository.dev.java.net</id>
+			<name>Java.net repository</name>
+			<url>http://download.java.net/maven/2</url>
+		</repository>
+		<repository>
+			<id>osgeo</id>
+			<name>Open Source Geospatial Foundation Repository</name>
+			<url>http://download.osgeo.org/webdav/geotools/</url>
 		</repository>
 
 	</repositories>

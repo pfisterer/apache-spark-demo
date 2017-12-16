@@ -16,11 +16,12 @@ public class SumoDataProcessing {
 		String fileName = "src/main/resources/sumo-sim-out.csv";
 		// String fileName = "src/main/resources/test.csv"; //Should return 10 for vehicle id 0
 
-		SparkConf conf = new SparkConf().setMaster("local[2]").setAppName("Simple Application");
+		SparkConf conf = new SparkConf().setMaster("local[*]").setAppName("Simple Application");
 		JavaSparkContext sc = new JavaSparkContext(conf);
 
 		SQLContext sqlContext = new SQLContext(sc);
-		JavaRDD<Row> sumoDataSet = sqlContext.read()
+		JavaRDD<Row> sumoDataSet = sqlContext
+				.read()
 				.format("com.databricks.spark.csv")
 				.option("inferSchema", "true")
 				.option("header", "true")
