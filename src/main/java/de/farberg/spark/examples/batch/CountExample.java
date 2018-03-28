@@ -4,12 +4,10 @@ import org.apache.spark.SparkConf;
 import org.apache.spark.api.java.JavaRDD;
 import org.apache.spark.api.java.JavaSparkContext;
 
-import de.uniluebeck.itm.util.logging.Logging;
 
 public class CountExample {
 
 	public static void main(String[] args) {
-		Logging.setLoggingDefaults();
 		String logFile = "src/main/resources/log4j.properties";
 
 		SparkConf conf = new SparkConf()

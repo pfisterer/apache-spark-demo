@@ -8,8 +8,6 @@ import org.apache.spark.api.java.JavaSparkContext;
 
 import com.google.common.collect.Lists;
 
-import de.uniluebeck.itm.util.logging.Logging;
-
 public class AverageExample {
 
 	static class AvgHelper implements Serializable {
@@ -19,7 +17,6 @@ public class AverageExample {
 	}
 
 	public static void main(String[] args) {
-		Logging.setLoggingDefaults();
 
 		SparkConf conf = new SparkConf().setMaster("local[2]").setAppName("Simple Application");
 		JavaSparkContext sc = new JavaSparkContext(conf);

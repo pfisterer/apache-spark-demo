@@ -6,13 +6,11 @@ import org.apache.spark.api.java.JavaSparkContext;
 import org.apache.spark.sql.Row;
 import org.apache.spark.sql.SQLContext;
 
-import de.uniluebeck.itm.util.logging.Logging;
 import scala.Tuple2;
 
 public class SumoDataProcessing {
 
 	public static void main(String[] args) {
-		Logging.setLoggingDefaults();
 		String fileName = "src/main/resources/sumo-sim-out.csv";
 		// String fileName = "src/main/resources/test.csv"; //Should return 10 for vehicle id 0
 

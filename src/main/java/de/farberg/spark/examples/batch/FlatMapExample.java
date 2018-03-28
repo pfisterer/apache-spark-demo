@@ -7,13 +7,10 @@ import org.apache.spark.api.java.JavaSparkContext;
 
 import com.google.common.collect.Lists;
 
-import de.uniluebeck.itm.util.logging.Logging;
 import scala.Tuple2;
 
 public class FlatMapExample {
 	public static void main(String[] args) {
-		Logging.setLoggingDefaults();
-
 		SparkConf conf = new SparkConf()
 				.setMaster("local[*]")
 				.setAppName("Simple Application");

@@ -20,7 +20,6 @@ import org.apache.spark.streaming.api.java.JavaStreamingContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import de.uniluebeck.itm.util.logging.Logging;
 import scala.Tuple2;
 
 public class SumoStreamingDemo {
@@ -31,13 +30,11 @@ public class SumoStreamingDemo {
 			"nox-emission", "pmx-emission" };
 
 	public static void main(String[] args) throws IOException, InterruptedException {
-		Logging.setLoggingDefaults();
-		Logger log = LoggerFactory.getLogger(SumoStreamingDemo.class);
 
 		String fileName = "src/main/resources/sumo-sim-out.csv";
 
 		// Set up the parsing of the CSV file
-		log.info("Reading file {}", fileName);
+		System.out.println("Reading file: "+ fileName);
 		Iterator<CSVRecord> csvIterator = CSVFormat.EXCEL
 				.withHeader(CSV_HEADERS_SUMO_TRACI_OUT)
 				.withSkipHeaderRecord()
@@ -51,7 +48,7 @@ public class SumoStreamingDemo {
 		ServerSocketSource<String> dataSource = new ServerSocketSource<>(() -> {
 			// If no more lines are there, return null
 			if (!csvIterator.hasNext()) {
-				log.info("CSV file has ended.");
+				System.out.println("CSV file has ended.");
 				return null;
 			}
 
@@ -61,13 +58,13 @@ public class SumoStreamingDemo {
 			// Sleep for some time if the time stamp in the file changes
 			int timeStamp = Integer.parseInt(record.get("timestamp"));
 			if (timeStamp > lastTimeStamp.get()) {
-				log.debug("Skipping to new timestamp {} (was {})", timeStamp, lastTimeStamp);
+				System.out.println("Skipping to new timestamp "+timeStamp+" (was "+lastTimeStamp+")");
 				lastTimeStamp.set(timeStamp);
 
 				try {
 					Thread.sleep(1000);
 				} catch (InterruptedException e) {
-					log.warn("" + e, e);
+					System.out.println(e);
 				}
 			}
 
