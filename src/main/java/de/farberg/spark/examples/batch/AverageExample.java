@@ -17,13 +17,11 @@ public class AverageExample {
 	}
 
 	public static void main(String[] args) {
-
 		SparkConf conf = new SparkConf().setMaster("local[2]").setAppName("Simple Application");
 		JavaSparkContext sc = new JavaSparkContext(conf);
 
 		JavaRDD<Integer> numbers = sc.parallelize(Lists.newArrayList(1, 2, 3, 4, 5, 6, 7));
 
-		@SuppressWarnings("resource")
 		AvgHelper aggregate = numbers.aggregate(new AvgHelper(), (a, x) -> {
 			a.sum += x;
 			a.count += 1;
@@ -35,7 +33,6 @@ public class AverageExample {
 		});
 
 		System.out.println(aggregate.sum / aggregate.count);
-
 		sc.close();
 	}
 }

@@ -15,18 +15,17 @@ import com.google.common.collect.Lists;
 import scala.Tuple2;
 
 public class SparkStreamingWordCount {
-	// TODO: Alles umbauem zu SparkContext wie in einer Klasse schon geschehen
+	// TODO: Alles umbauen zu SparkContext wie in einer Klasse schon geschehen
 
 	private static final String host = "localhost";
 
 	public static void main(String[] args) throws FileNotFoundException, InterruptedException {
 
-		// Create a server socket data source that sends string values every 100mss
+		// Create a server socket data source that sends string values every 100ms
 		ServerSocketSource<String> dataSource = new ServerSocketSource<>(() -> "Das ist ein ein ein ein Test", () -> 100);
 
-		// Create the context with a 1 second batch size
+		// Create the context with a 5 second batch size
 		SparkConf sparkConf = new SparkConf().setAppName("JavaNetworkWordCount").setMaster("local[*]");
-
 		JavaStreamingContext ssc = new JavaStreamingContext(sparkConf, Durations.seconds(5));
 
 		// Create a JavaReceiverInputDStream on target ip:port and count the words in input stream of \n delimited text
@@ -35,8 +34,9 @@ public class SparkStreamingWordCount {
 
 		JavaDStream<String> words = lines.flatMap(x -> Lists.newArrayList(x.split(" ")).iterator());
 
-		JavaPairDStream<String, Integer> wordCounts = words.mapToPair(word -> new Tuple2<String, Integer>(word, 1)).reduceByKey(
-				(i1, i2) -> i1 + i2);
+		JavaPairDStream<String, Integer> wordCounts = words
+				.mapToPair(word -> new Tuple2<String, Integer>(word, 1))
+				.reduceByKey((i1, i2) -> i1 + i2);
 
 		wordCounts.print();
 		ssc.start();

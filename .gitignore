@@ -17,3 +17,4 @@ target/
 
 #Others
 *.private*
+src/main/resources/NASA_access_log_Jul95.gz

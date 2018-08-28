@@ -12,11 +12,13 @@
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<spark.version>2.2.0</spark.version>
-		<scala.binary.version>2.10</scala.binary.version>
+		<spark.version>2.3.1</spark.version>
+		<scala.binary.version>2.11</scala.binary.version>
 	</properties>
 
 	<dependencies>
+
+		
 
 		<!-- https://mvnrepository.com/artifact/com.rgi-corp/ww-geo-coords -->
 		<dependency>
@@ -60,7 +62,8 @@
 			<version>${spark.version}</version>
 		</dependency>
 
-		<dependency> <!-- For Spark-Kafka connectivity -->
+		<!-- For Spark-Kafka connectivity -->
+		<dependency>
 			<groupId>org.apache.spark</groupId>
 			<artifactId>spark-streaming-kafka_${scala.binary.version}</artifactId>
 			<version>1.6.3</version>
@@ -169,61 +172,8 @@
 
 	</build>
 
-	<distributionManagement>
-		<repository>
-			<id>farberg</id>
-			<name>Farberg Releases</name>
-			<url>http://nexus.farberg.de/content/repositories/releases/</url>
-		</repository>
-		<snapshotRepository>
-			<id>farberg</id>
-			<name>Farberg Releases</name>
-			<url>http://nexus.farberg.de/content/repositories/snapshots/</url>
-		</snapshotRepository>
-	</distributionManagement>
-
 	<repositories>
 
-		<repository>
-			<id>farberg-releases</id>
-			<url>http://nexus.farberg.de/content/repositories/releases/</url>
-			<releases>
-				<enabled>true</enabled>
-			</releases>
-			<snapshots>
-				<enabled>false</enabled>
-			</snapshots>
-		</repository>
-		<repository>
-			<id>farberg-snapshots</id>
-			<url>http://nexus.farberg.de/content/repositories/snapshots/</url>
-			<releases>
-				<enabled>false</enabled>
-			</releases>
-			<snapshots>
-				<enabled>true</enabled>
-			</snapshots>
-		</repository>
-
-		<repository>
-			<snapshots>
-				<enabled>false</enabled>
-				<updatePolicy>never</updatePolicy>
-			</snapshots>
-			<releases>
-				<enabled>true</enabled>
-				<updatePolicy>interval:10080</updatePolicy>
-			</releases>
-			<id>jboss.release</id>
-			<name>JBoss releases</name>
-			<url>https://repository.jboss.org/nexus/content/groups/public/</url>
-		</repository>
-
-		<repository>
-			<id>maven2-repository.dev.java.net</id>
-			<name>Java.net repository</name>
-			<url>http://download.java.net/maven/2</url>
-		</repository>
 		<repository>
 			<id>osgeo</id>
 			<name>Open Source Geospatial Foundation Repository</name>

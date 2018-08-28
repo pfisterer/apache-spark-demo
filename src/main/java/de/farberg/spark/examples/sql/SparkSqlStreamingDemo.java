@@ -28,7 +28,7 @@ public class SparkSqlStreamingDemo {
 		dataFrame.createTempView("consumers");
 
 		Dataset<Row> activeConsumersDataFrame = sqlContext
-				.sql("SELECT posLat, posLon, kwH, switchedOn FROM consumers WHERE switchedOn = false");
+				.sql("SELECT posLat, posLon, kwH, switchedOn FROM consumers WHERE switchedOn = true");
 
 		List<String> activeConsumers = activeConsumersDataFrame
 				.javaRDD()
